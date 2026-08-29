@@ -9,6 +9,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
 
+    // Verificar si hay una sesión activa al cargar la página
+const sesionActiva = localStorage.getItem('sesionActiva');
+
+if (sesionActiva) {
+    loginScreen.classList.remove('active');
+    dashboardScreen.classList.add('active');
+    
+    // Si es un usuario guardado, recuperar su nombre
+    const usuarioGuardado = JSON.parse(localStorage.getItem('usuarioTalento'));
+    if (usuarioGuardado && usuarioGuardado.correo === sesionActiva) {
+        const primerNombre = usuarioGuardado.nombre.split(' ')[0];
+        document.getElementById('nombre-usuario').innerText = `¡Hola, ${primerNombre}! 👋`;
+    }
+}
+
     // Botones de navegación entre Login y Registro
     document.getElementById('go-to-register').addEventListener('click', (e) => {
         e.preventDefault();
@@ -47,6 +62,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const correo = inputs[1].value;
         const password = inputs[3].value; // Primer campo de contraseña
         const confirmPassword = inputs[4].value;
+
+        // Guardar la sesión y cambiar de pantalla directamente al Dashboard
+localStorage.setItem('sesionActiva', correo);
+registerScreen.classList.remove('active');
+dashboardScreen.classList.add('active');
 
         if (password !== confirmPassword) {
             alert("Las contraseñas no coinciden");
@@ -103,6 +123,11 @@ registerForm.reset();
                 const primerNombre = usuarioGuardado.nombre.split(' ')[0];
                 document.getElementById('nombre-usuario').innerText = `¡Hola, ${primerNombre}! 👋`;
             }
+
+            // Login exitoso
+localStorage.setItem('sesionActiva', correoIngresado); // Guarda la sesión actual
+loginScreen.classList.remove('active');
+dashboardScreen.classList.add('active');
         } else {
             alert("Correo o contraseña incorrectos. Usa demo@talento.com / 123 o crea una cuenta.");
         }
@@ -119,4 +144,12 @@ registerForm.reset();
             this.classList.toggle('fa-eye-slash');
         });
     });
+});
+
+document.getElementById('logout-btn').addEventListener('click', () => {
+    // 1. Borrar la sesión de la memoria
+    localStorage.removeItem('sesionActiva');
+    
+    // 2. Forzar la recarga de la página (esto te manda directo al login automáticamente)
+    window.location.reload();
 });
