@@ -43,7 +43,7 @@ body {
 ========================================= */
 .screen { 
     display: none; 
-    padding: 24px; 
+    padding: 24px 24px 120px 24px; /* 120px de espacio al final */
     flex-direction: column; 
     flex: 1;
     overflow-y: auto; 
@@ -295,26 +295,69 @@ body {
    MEDIA QUERIES (ESCRITORIO RESPONSIVO)
 ========================================= */
 @media (min-width: 768px) {
-    .app-container {
-        align-items: center;
-        background-color: var(--gray-bg);
-    }
+     .app-container {
+    width: 100%;
+    height: 100vh;
+    background-color: var(--gray-bg);
+    position: relative;
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+}
 
-    .screen {
-        max-width: 900px;
-        width: 100%;
-        margin: 0 auto;
-        padding: 40px; 
-        background: white;
-        border-left: 1px solid var(--gray-border);
-        border-right: 1px solid var(--gray-border);
-        box-shadow: 0 0 30px rgba(0,0,0,0.02);
-    }
-    
-    .bottom-nav {
-        max-width: 900px; /* El menú inferior no se estirará más allá de los 900px */
-        bottom: 0;
-    }
+    .screen { 
+    display: none; 
+    padding: 24px 24px 140px 24px; /* Empuja el contenido muy por encima del menú */
+    flex-direction: column; 
+    flex: 1;
+    overflow-y: auto; 
+    overflow-x: hidden;
+    background-color: var(--bg-color);
+    position: relative;
+    z-index: 1;
+}
+.screen.active { 
+    display: flex; 
+}
+
+.bottom-nav { 
+    position: fixed; 
+    bottom: 0; 
+    left: 0;
+    width: 100%; 
+    background: #FFFFFF; 
+    display: flex; 
+    justify-content: space-around; 
+    align-items: flex-end; 
+    padding: 12px 10px 20px 10px; 
+    box-shadow: 0 -10px 25px rgba(0,0,0,0.05); 
+    border-top-left-radius: 24px; 
+    border-top-right-radius: 24px; 
+    z-index: 1000; 
+}
+
+/* Máscara sólida para tapar el texto que se asoma por las esquinas */
+.app-container::after {
+    content: "";
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35px;
+    background-color: var(--bg-color);
+    z-index: 999; /* Se sitúa exactamente debajo del menú */
+}
+
+/* Línea de colores pegada al fondo absoluto */
+.bottom-nav::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-image: linear-gradient(to right, #1E1B4B 0%, #1E1B4B 25%, #6B21A8 25%, #6B21A8 50%, #C2185B 50%, #C2185B 75%, #84CC16 75%, #84CC16 100%);
+}
 
     .hero-banner {
         padding: 30px 50px;
