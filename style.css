@@ -1,0 +1,193 @@
+:root {
+    --primary: #6B21A8; /* Morado principal */
+    --secondary: #1E1B4B; /* Azul muy oscuro para textos */
+    --accent-pink: #C2185B; /* Rosa de la palabra oportunidad */
+    --bg-color: #FFFFFF;
+    --gray-text: #6B7280;
+    --gray-border: #D1D5DB;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #e5e7eb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 800px;
+    height: 300vh;
+    max-height: 1000px;
+    background-color: var(--bg-color);
+    position:absolute;
+    top: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.screen { display: none; padding: 24px; }
+.screen.active { display: block; }
+
+/* --- ESPACIOS PARA LAS IMÁGENES DEL LOGO --- */
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+/* Espacio temporal gris para tu imagen del pulpo */
+.logo-img-icon {
+    width: 250px;  /* Ajusta este tamaño al de tu imagen final */
+    height: 250px;
+    object-fit: contain;
+    margin-bottom: 10px;
+   
+    border-radius: 10px;
+}
+
+
+.tagline {
+    color: var(--secondary);
+    font-size: 15px;
+    text-align: center;
+    line-height: 1.3;
+}
+.highlight-pink { color: var(--accent-pink); font-weight: 500; }
+
+/* --- FORMULARIO --- */
+.form-title {
+    color: var(--secondary);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.input-group { position: relative; margin-bottom: 16px; }
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary); /* Iconos morados */
+    font-size: 18px;
+}
+
+.input-group .toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-text);
+    cursor: pointer;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 15px 14px 45px;
+    border: 1px solid var(--primary); /* Borde morado como en la imagen */
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    color: var(--secondary);
+}
+.input-group input::placeholder { color: #9CA3AF; }
+
+/* --- CHECKBOX PERSONALIZADO --- */
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    margin-bottom: 24px;
+    color: var(--secondary);
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 24px;
+    cursor: pointer;
+    user-select: none;
+}
+.custom-checkbox input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
+.checkmark {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    height: 16px;
+    width: 16px;
+    background-color: transparent;
+    border: 1.5px solid var(--primary); /* Borde morado */
+    border-radius: 4px;
+}
+.custom-checkbox input:checked ~ .checkmark { background-color: var(--primary); }
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.custom-checkbox input:checked ~ .checkmark:after { display: block; }
+
+.forgot-pass { color: var(--primary); text-decoration: none; font-weight: 500; }
+
+/* --- BOTÓN PRINCIPAL --- */
+.btn-primary {
+    width: 100%;
+    background-color: var(--primary);
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* --- SEPARADOR Y REDES SOCIALES --- */
+.divider { text-align: center; margin: 24px 0; position: relative; }
+.divider::before { content: ""; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: #E5E7EB; z-index: 1; }
+.divider span { background: #fff; padding: 0 10px; color: var(--gray-text); font-size: 13px; position: relative; z-index: 2; }
+
+.social-login {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+.social-btn {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    border: 1px solid var(--gray-border);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.social-btn:hover { background: #f9fafb; }
+
+.register-link { text-align: center; font-size: 15px; color: var(--secondary); line-height: 1.5; }
+.register-link a { color: var(--accent-pink); text-decoration: none; font-weight: 500; }
