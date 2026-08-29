@@ -15,6 +15,7 @@ const sesionActiva = localStorage.getItem('sesionActiva');
 if (sesionActiva) {
     loginScreen.classList.remove('active');
     dashboardScreen.classList.add('active');
+    document.getElementById('main-nav').style.display = 'flex'; // <--- Añade esto aquí
     
     // Si es un usuario guardado, recuperar su nombre
     const usuarioGuardado = JSON.parse(localStorage.getItem('usuarioTalento'));
@@ -67,6 +68,7 @@ if (sesionActiva) {
 localStorage.setItem('sesionActiva', correo);
 registerScreen.classList.remove('active');
 dashboardScreen.classList.add('active');
+document.getElementById('main-nav').style.display = 'flex';
 
         if (password !== confirmPassword) {
             alert("Las contraseñas no coinciden");
@@ -114,9 +116,10 @@ registerForm.reset();
         const esUsuarioEstatico = correoIngresado === usuarioEstatico.correo && passwordIngresada === usuarioEstatico.password;
 
         if (esUsuarioGuardado || esUsuarioEstatico) {
-            // Login exitoso
-            loginScreen.classList.remove('active');
-            dashboardScreen.classList.add('active');
+    localStorage.setItem('sesionActiva', correoIngresado);
+    loginScreen.classList.remove('active');
+    dashboardScreen.classList.add('active');
+    document.getElementById('main-nav').style.display = 'flex';
             
             // Si es usuario guardado, actualizamos el nombre en el dashboard
             if (esUsuarioGuardado) {
@@ -146,10 +149,72 @@ dashboardScreen.classList.add('active');
     });
 });
 
-document.getElementById('logout-btn').addEventListener('click', () => {
-    // 1. Borrar la sesión de la memoria
+// Cerrar sesión (desde el botón superior o el del perfil)
+function cerrarSesion() {
     localStorage.removeItem('sesionActiva');
-    
-    // 2. Forzar la recarga de la página (esto te manda directo al login automáticamente)
     window.location.reload();
+}
+
+const logoutBtnTop = document.getElementById('logout-btn');
+if(logoutBtnTop) logoutBtnTop.addEventListener('click', cerrarSesion);
+
+const logoutBtnProfile = document.getElementById('logout-btn-profile');
+if(logoutBtnProfile) logoutBtnProfile.addEventListener('click', cerrarSesion);
+
+// Navegación de la aplicación (Menú, Perfil y Publicar)
+const navItems = document.querySelectorAll('.nav-item');
+const appScreens = ['dashboard-view', 'explore-view', 'messages-view', 'profile-view', 'publish-view'];
+
+// Función genérica para cambiar de pantalla
+function cambiarPantalla(targetId, navTargetId = null) {
+    appScreens.forEach(id => {
+        const screen = document.getElementById(id);
+        if (screen) screen.classList.remove('active');
+    });
+    
+    const targetScreen = document.getElementById(targetId);
+    if (targetScreen) targetScreen.classList.add('active');
+    
+    navItems.forEach(nav => nav.classList.remove('active'));
+    
+    if (navTargetId) {
+        const activeNav = document.querySelector(`[data-target="${navTargetId}"]`);
+        if (activeNav) activeNav.classList.add('active');
+    }
+}
+
+// Clic en los iconos del menú inferior
+navItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = item.getAttribute('data-target');
+        if(target) cambiarPantalla(target, target);
+    });
 });
+
+// Clic en el botón central de Publicar (+)
+const btnPublish = document.getElementById('fab-publish-btn');
+if(btnPublish) {
+    btnPublish.addEventListener('click', () => {
+        cambiarPantalla('publish-view');
+    });
+}
+
+// Clic en la foto de perfil superior (Dashboard)
+const btnProfile = document.getElementById('top-profile-btn');
+if(btnProfile) {
+    btnProfile.addEventListener('click', () => {
+        cambiarPantalla('profile-view', 'profile-view');
+    });
+}
+
+// Simular la publicación del reto
+const formPublish = document.getElementById('publish-form');
+if(formPublish) {
+    formPublish.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert("¡Reto publicado con éxito! Te notificaremos cuando encontremos el talento ideal.");
+        e.target.reset();
+        cambiarPantalla('dashboard-view', 'dashboard-view');
+    });
+}
