@@ -295,98 +295,73 @@ body {
    MEDIA QUERIES (ESCRITORIO RESPONSIVO)
 ========================================= */
 @media (min-width: 768px) {
-     .app-container {
-    width: 100%;
-    height: 100vh;
-    background-color: var(--gray-bg);
-    position: relative;
-    overflow: hidden; 
-    display: flex;
-    flex-direction: column;
-}
+    .app-container {
+        background-color: var(--gray-bg);
+        align-items: center; /* Centra la app en la pantalla */
+    }
 
     .screen { 
-    display: none; 
-    padding: 24px 24px 140px 24px; /* Empuja el contenido muy por encima del menú */
-    flex-direction: column; 
-    flex: 1;
-    overflow-y: auto; 
-    overflow-x: hidden;
-    background-color: var(--bg-color);
-    position: relative;
-    z-index: 1;
-}
-.screen.active { 
-    display: flex; 
-}
-
-.bottom-nav { 
-    position: fixed; 
-    bottom: 0; 
-    left: 0;
-    width: 100%; 
-    background: #FFFFFF; 
-    display: flex; 
-    justify-content: space-around; 
-    align-items: flex-end; 
-    padding: 12px 10px 20px 10px; 
-    box-shadow: 0 -10px 25px rgba(0,0,0,0.05); 
-    border-top-left-radius: 24px; 
-    border-top-right-radius: 24px; 
-    z-index: 1000; 
-}
-
-/* Máscara sólida para tapar el texto que se asoma por las esquinas */
-.app-container::after {
-    content: "";
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 35px;
-    background-color: var(--bg-color);
-    z-index: 999; /* Se sitúa exactamente debajo del menú */
-}
-
-/* Línea de colores pegada al fondo absoluto */
-.bottom-nav::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 8px;
-    background-image: linear-gradient(to right, #1E1B4B 0%, #1E1B4B 25%, #6B21A8 25%, #6B21A8 50%, #C2185B 50%, #C2185B 75%, #84CC16 75%, #84CC16 100%);
-}
-
-    .hero-banner {
-        padding: 30px 50px;
-    }
-    
-    .hero-3d-img {
-        max-width: 220px;
+        max-width: 800px; /* Restringe el ancho a tamaño tablet/dashboard */
+        width: 100%;
+        margin: 0 auto; /* Centrado absoluto */
+        border-left: 1px solid var(--gray-border);
+        border-right: 1px solid var(--gray-border);
+        box-shadow: 0 0 30px rgba(0,0,0,0.03);
+        padding: 40px 40px 140px 40px; /* Más aire a los lados en PC */
     }
 
+    /* Menú inferior centrado al tamaño de la pantalla restringida */
+    .bottom-nav { 
+        max-width: 800px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 12px 40px 20px 40px;
+    }
+
+    /* Máscaras y líneas ajustadas al nuevo ancho */
+    .app-container::after {
+        max-width: 800px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .bottom-nav::after {
+        border-bottom-left-radius: 24px;
+        border-bottom-right-radius: 24px;
+    }
+
+    /* Convertir el scroll de acciones en una cuadrícula simétrica */
     .quick-actions-scroll {
-        flex-wrap: wrap;
-        justify-content: flex-start;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
         gap: 16px;
         overflow: visible;
+        min-height: auto;
     }
 
     .action-item {
-        flex: 1;
-        min-width: 110px;
+        width: 100%;
+        min-width: 0;
     }
 
+    /* Convertir las tarjetas estiradas en 2 columnas */
     .cards-scroller {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
         overflow: visible;
     }
 
     .challenge-card {
-        max-width: 100%; 
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .hero-banner {
+        padding: 30px 40px;
+    }
+    
+    .hero-3d-img {
+        max-width: 180px;
     }
 }
