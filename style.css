@@ -168,8 +168,10 @@ body {
     overflow-x: auto; 
     gap: 12px; 
     margin-bottom: 32px; 
-    padding: 12px 4px; /* Evita que las sombras y bordes se corten */
+    padding: 8px 4px; 
     scrollbar-width: none; 
+    flex-shrink: 0; /* Evita que la pantalla aplaste el carrusel verticalmente */
+    min-height: 115px; /* Garantiza el espacio exacto para el icono y el nombre */
 }
 .quick-actions-scroll::-webkit-scrollbar { display: none; }
 
@@ -179,14 +181,15 @@ body {
     align-items: center; 
     justify-content: center; 
     text-align: center; 
-    gap: 10px; 
-    min-width: 95px; /* Evita que se encojan y aplasten el contenido */
+    gap: 8px; 
+    min-width: 95px; 
+    height: 95px; /* Altura fija para mantenerlos perfectamente proporcionados */
     background: #FFFFFF;
     border: 1px solid #F3F4F6;
     border-radius: 16px;
-    padding: 16px 8px;
+    padding: 12px 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-    flex-shrink: 0; /* Previene deformación en flexbox */
+    flex-shrink: 0; /* Previene la deformación individual */
     cursor: pointer; 
 }
 .icon-box { display: flex; align-items: center; justify-content: center; background: transparent; }
@@ -203,7 +206,15 @@ body {
 .section-header a { font-size: 12px; color: var(--primary); text-decoration: none; font-weight: 500; }
 
 /* Carrusel de Tarjetas de Retos */
-.cards-scroller { display: flex; overflow-x: auto; gap: 16px; margin-bottom: 32px; padding: 10px 4px 15px 4px; scrollbar-width: none; }
+.cards-scroller { 
+    display: flex; 
+    overflow-x: auto; 
+    gap: 16px; 
+    margin-bottom: 32px; 
+    padding: 10px 4px 15px 4px; 
+    scrollbar-width: none; 
+    flex-shrink: 0; /* Agrégale esta línea */
+}
 .cards-scroller::-webkit-scrollbar { display: none; }
 .challenge-card { min-width: 260px; max-width: 280px; border: none; border-radius: 20px; overflow: hidden; background: white; box-shadow: 0 6px 15px rgba(0,0,0,0.05); flex-shrink: 0; }
 .card-img { width: 100%; height: 140px; object-fit: cover; background: #E5E7EB; border-radius: 20px 20px 0 0; }
